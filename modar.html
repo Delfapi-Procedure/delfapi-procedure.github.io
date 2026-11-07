@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mod. A.R. settimanale – Delfapi</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#003d63">
+<link rel="icon" type="image/png" href="icona-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--blu:#005387;--blu-scuro:#003d63;--carta:#fff;--fondo:#eef1f4;--riga:#cfd6dd;--testo:#141414;--testo-2:#4a5560;--giallo:#f2b600;--rosso:#b4231a;--ok:#1e7a3a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--blu:#2f8fd0;--blu-scuro:#005387;--carta:#1a1e23;--fondo:#0d0f11;--riga:#333b44;--testo:#f1f3f5;--testo-2:#aab4be}}
+:root[data-theme="dark"]{color-scheme:dark;--blu:#2f8fd0;--blu-scuro:#005387;--carta:#1a1e23;--fondo:#0d0f11;--riga:#333b44;--testo:#f1f3f5;--testo-2:#aab4be}
+*,*::before,*::after{box-sizing:inherit}html,body{margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--fondo);color:var(--testo);font-family:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.4}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--blu-scuro);z-index:10}
+h1,h2,h3{font-family:"Barlow Condensed","Barlow",Impact,"Arial Narrow",sans-serif;margin:0;line-height:1.05}
+button{font:inherit;color:inherit;cursor:pointer}:focus-visible{outline:3px solid var(--giallo);outline-offset:2px}
+.testata{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--blu-scuro);color:#fff;border-bottom:6px solid var(--giallo)}
+.testata-in{max-width:760px;margin:0 auto;padding:12px 16px 10px;display:flex;align-items:center;gap:12px}
+.testata img{width:48px;height:48px;border-radius:50%;background:#fff;padding:8px 7px 6px;object-fit:contain;flex:0 0 auto}
+.testata h1{font-size:clamp(21px,6vw,28px);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}.testata .sotto{font-size:14px;opacity:.9;margin-top:2px}
+.testata-in>div{flex:1 1 auto;min-width:0}
+.esci{flex:0 0 auto;border:0;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;padding:8px 14px;font-weight:600}.esci[hidden]{display:none}
+.indietro{display:none;width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,.14);border:0;color:#fff;font-size:26px;flex:0 0 auto}.indietro.on{display:block}
+.pagina{max-width:760px;margin:0 auto;padding:16px 16px 40px}
+.avviso{background:#fff6d6;color:#141414;border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+.btn.verde{background:var(--ok);border-color:var(--ok)}.btn.annulla{background:transparent;color:var(--testo-2);border-color:var(--riga)}
+.campo{display:block;margin-top:12px}.campo span{display:block;font-weight:600;margin-bottom:4px}
+.campo input,.campo textarea{width:100%;min-height:48px;border:2px solid var(--riga);border-radius:10px;background:var(--fondo);color:var(--testo);padding:10px 12px;font:inherit}
+.campo textarea{min-height:80px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 18px;border-radius:12px;border:2px solid var(--blu);background:var(--blu);color:#fff;font-weight:700;font-size:17px;text-decoration:none}
+.btn.sec{background:transparent;color:var(--blu)}.btn[disabled]{opacity:.5}
+.esito{margin-top:12px;padding:12px;border-radius:10px;font-weight:600;display:none}.esito.on{display:block}.esito.ok{background:#dff5d8;color:#14501f}.esito.ko{background:#ffd6d1;color:#7a120c}.esito.info{background:var(--fondo);color:var(--testo-2)}
+.vuoto{color:var(--testo-2);text-align:center;padding:30px 10px}
+.torna{display:block;text-align:center;margin-top:20px;color:var(--blu);font-weight:600}
+.pin{position:fixed;inset:0;z-index:30;background:var(--blu-scuro);color:#fff;display:flex;align-items:center;justify-content:center;padding:24px}
+.pin-box{width:100%;max-width:340px;text-align:center}.pin-box h1{font-size:28px;text-transform:uppercase;margin:12px 0 6px}
+.pin-box input{width:100%;height:58px;border:0;border-radius:12px;font:700 30px "Barlow Condensed",sans-serif;letter-spacing:.3em;text-align:center;color:#141414;background:#fff}
+.pin-box button{margin-top:12px;width:100%;min-height:52px;border:0;border-radius:12px;background:var(--giallo);color:#141414;font-weight:700;font-size:18px}
+.pin-box .err{min-height:22px;margin-top:8px;color:#ffd6d1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.rep{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.rep button{min-height:48px;line-height:1.05;border:2px solid var(--blu);border-radius:12px;background:var(--carta);color:var(--blu);font:700 20px "Barlow Condensed",sans-serif}.rep button.on{background:var(--blu);color:#fff}
+.date{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--carta);border:1px solid var(--riga);border-radius:12px;padding:10px}
+.date label{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:14px}.date label small{font-weight:400;color:var(--testo-2)}.date .tutta{grid-column:1/-1}
+.date input{min-height:44px;border:2px solid var(--riga);border-radius:10px;background:var(--fondo);color:var(--testo);font:600 17px "Barlow",sans-serif;padding:0 8px}
+.passo{display:flex;align-items:center;gap:10px;font-size:26px;margin:20px 0 8px}.passo>span:first-child{flex:0 0 34px;height:34px;border-radius:50%;background:#e8590c;color:#fff;display:grid;place-items:center;font-size:21px}.passo small{font:600 15px "Barlow",sans-serif;color:#e8590c}
+.aiuto{color:var(--testo-2);font-size:14px;margin:-2px 2px 8px}
+.libr{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.libr button{border:2px solid var(--riga);border-left:8px solid #f2b600;background:var(--carta);border-radius:12px;min-height:52px;padding:6px 10px;text-align:left;font-weight:600;font-size:15px;line-height:1.15}
+.libr button.usato{opacity:.45}
+.scrivi{width:100%;margin-top:8px}
+.lav{background:var(--carta);border:2px solid var(--riga);border-radius:14px;padding:10px;margin-bottom:10px}
+.lav-t{display:flex;gap:6px;align-items:center}.lav-t input{flex:1;min-width:0;min-height:44px;border:0;border-bottom:2px solid var(--riga);background:transparent;color:var(--testo);font:700 20px "Barlow Condensed",sans-serif;text-transform:uppercase}
+.lav-t button{width:38px;height:38px;border:0;border-radius:8px;background:transparent;color:var(--testo-2);font-size:20px}.lav-t .x{color:var(--rosso);font-size:24px}
+.lab{font:600 12px "Barlow",sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--testo-2);margin:10px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:42px;border:2px solid var(--riga);border-radius:999px;background:var(--fondo);color:var(--testo);padding:0 12px;font-weight:600;font-size:14px}
+.chip.f.on{background:#b4231a;border-color:#b4231a;color:#fff}.chip.a.on{background:var(--blu);border-color:var(--blu);color:#fff}
+.chip .e{font-size:18px}
+.nota{width:100%;margin-top:8px;min-height:40px;border:1px dashed var(--riga);border-radius:10px;background:transparent;color:var(--testo);font:14px "Barlow",sans-serif;padding:8px}
+.btn.verde{background:var(--ok);border-color:var(--ok)}
+.azioni{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.azioni .btn{flex:1 1 150px}
+.svuota{border:0;background:transparent;color:var(--rosso);font-weight:600;margin-top:10px;padding:6px 0}
+.btn.wa{background:#1fa855;border-color:#1fa855;color:#fff}
+.carica{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px dashed var(--blu);border-radius:14px;background:var(--carta);padding:12px;margin-bottom:12px;cursor:pointer}.carica span{font:700 20px "Barlow Condensed",sans-serif;color:var(--blu)}.carica small{color:var(--testo-2);font-size:13px}
+.badge{display:inline-block;margin:6px 0 0;background:#f2b600;color:#141414;border-radius:6px;padding:2px 8px;font-size:12px;font-weight:700}
+.cerca-lav{width:100%;min-height:50px;border:2px solid var(--riga);border-radius:12px;background:var(--carta);color:var(--testo);font:17px "Barlow",sans-serif;padding:0 14px;margin-bottom:8px}
+.libr .nuovo-da-cerca{border-left-color:var(--ok);border-style:dashed;color:var(--ok)}
+.vuoto{color:var(--testo-2);text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<header class="testata"><div class="testata-in">
+  <img src="marchio.png" alt="Delfapi">
+  <div><h1>Mod. A.R. settimanale</h1><div class="sotto" id="sotto">Analisi dei rischi per attività specifica</div></div>
+  <button class="esci" id="esci" hidden>Esci</button>
+</div></header>
+<main class="pagina">
+  <div class="avviso" id="modo" hidden></div>
+  <label class="carica"><input type="file" id="duvri-file" accept="application/pdf,.pdf" hidden><span>📄 Carica DUVRI / GANTT (PDF)</span><small>trova da solo i lavori Delfapi</small></label>
+  <div class="rep" id="rep"><button data-r="forno">Campata forno</button><button data-r="cco1">CCO1</button><button data-r="fas_exp">FAS Expander</button><button data-r="fas_lv">FAS Linea veloce</button></div>
+  <div class="date">
+    <label>Dal <input type="date" id="dal"></label>
+    <label>Al <small>(facoltativo)</small> <input type="date" id="al"></label>
+    <label class="tutta">Data del DUVRI Tenaris <input type="date" id="duvri"></label>
+  </div>
+
+  <h2 class="passo"><span>1</span> Aggiungi i lavori</h2>
+  <p class="aiuto">Tocca un lavoro della libreria oppure scrivilo tu.</p>
+  <input class="cerca-lav" id="cerca-lav" type="search" placeholder="🔍 Cerca un lavoro (es. volta, clappa, motore)…" aria-label="Cerca un lavoro">
+  <div class="libr" id="libr"></div>
+  <button class="btn sec scrivi" id="scrivi">✏️ Scrivi un lavoro</button>
+
+  <h2 class="passo"><span>2</span> Controlla ogni lavoro <small id="n-lav"></small></h2>
+  <div id="lavori"></div>
+
+  <div class="azioni"><button class="btn verde" id="crea">Crea il file Excel</button><button class="btn wa" id="condividi">Manda su WhatsApp (PDF)</button></div>
+  <button class="svuota" id="svuota">Ricomincia da capo</button>
+  <div class="esito" id="esito"></div>
+  <a class="torna" href="./">‹ Torna a Procedure e sicurezza</a>
+</main>
+
+<script>
+(function(){
+"use strict";
+var API = "";                 // indirizzo /exec dell'app web Google (da inserire)
+var CHIAVE = "dlf-7Q4k-ctrl";
+var PIN_ANTEPRIMA = "6606753e5a126d7068012a526d44c3eb2f7fcd09d5faeb30c77dbfd87ca7e758";
+function $(s){return document.querySelector(s)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function oggiIso(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function dIt(iso){ var p=String(iso).slice(0,10).split("-"); return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:iso; }
+var OP=null; try{ OP=JSON.parse(localStorage.getItem("op-ctrl")||"null"); }catch(e){}
+function sha(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return ("0"+x.toString(16)).slice(-2)}).join("")})}
+function post(o){ o.chiave=CHIAVE; return fetch(API,{method:"POST",body:JSON.stringify(o)}).then(function(r){return r.json()}); }
+function schermoPin(titolo, testo, prova){
+  var d=document.createElement("div"); d.className="pin";
+  d.innerHTML='<div class="pin-box"><img src="marchio.png" alt="" style="width:90px;height:90px;border-radius:50%;background:#fff;padding:14px 12px 10px"><h1>'+esc(titolo)+'</h1><p>'+testo+'</p><input type="password" inputmode="numeric" maxlength="8" aria-label="PIN"><button>Entra</button><div class="err"></div><a href="./" style="color:#fff;display:inline-block;margin-top:16px">‹ Torna a Procedure e sicurezza</a></div>';
+  document.body.appendChild(d); var i=d.querySelector("input"), b=d.querySelector("button"), er=d.querySelector(".err"); setTimeout(function(){i.focus()},100);
+  function vai(){ var v=i.value.trim(); if(!v) return; b.disabled=true; er.textContent="Verifica…"; prova(v).then(function(msg){ b.disabled=false; if(msg){ er.textContent=msg; i.value=""; } else d.remove(); }); }
+  b.onclick=vai; i.onkeydown=function(e){ if(e.key==="Enter") vai(); };
+}
+/* accesso: in anteprima PIN dell'area controlli; collegato al foglio, PIN personale + permesso */
+function accesso(titolo, permesso, avvia){
+  if(!API){
+    var ok=false; try{ ok=localStorage.getItem("pin-ctrl")===PIN_ANTEPRIMA }catch(e){}
+    if(ok){ avvia(null); return; }
+    schermoPin(titolo,"Anteprima: inserisci il PIN dell'area controlli.",function(v){ return sha(v).then(function(h){ if(h!==PIN_ANTEPRIMA) return "PIN non corretto."; try{localStorage.setItem("pin-ctrl",h)}catch(e){} avvia(null); return ""; }); });
+    return;
+  }
+  function conPin(pin){ return post({azione:"liste",pin:pin}).then(function(r){
+      if(!r.ok) return r.errore==="pin"?"PIN non riconosciuto.":r.errore;
+      if(!r[permesso]) return "Il tuo PIN non è abilitato a questa funzione.";
+      OP={nome:r.nome,pin:pin}; try{localStorage.setItem("op-ctrl",JSON.stringify(OP))}catch(e){}
+      avvia(r); return "";
+    }).catch(function(){ return "Serve la connessione per entrare."; }); }
+  if(OP&&OP.pin){ conPin(OP.pin).then(function(msg){ if(msg) schermoPin(titolo,"Entra con il tuo <b>PIN personale</b>.",conPin); }); }
+  else schermoPin(titolo,"Entra con il tuo <b>PIN personale</b>.",conPin);
+}
+function esci(){ OP=null; try{localStorage.removeItem("op-ctrl")}catch(e){} location.reload(); }
+/* ===== generazione Mod. A.R. (ExcelJS) – usata dalla pagina e dai test ===== */
+var ATTR={
+ UM:{n:"UTENSILI MANUALI",r:"URTI, CONTUSIONI, SCHIACCIAMENTO",m:"DISPOSITIVI DI PROTEZIONE ADEGUATI",d:{forno:"GUANTI",cco1:"GUANTI"}},
+ UE:{n:"UTENSILI ELETTRICI",r:"USTIONI, ABRASIONI, PROIEZIONE DI MATERIALE INCANDESCENTE, ELETTROCUZIONE",m:"UTILIZZARE DISPOSITIVI DI PROTEZIONE ED ABBIGLIAMENTO ADEGUATO. EVITARE POSIZIONI DEL CORPO ANOMALE E STARE IN POSIZIONE TALE DA COMPENSARE LE FORZE DI CONTRACCOLPO.",d:{forno:"GUANTI, OCCHIALI DA MOLA, TAPPI OTOPROTETTORI, MASCHERINA ANTIPOLVERE",cco1:"MASCHERINA FFP2, OTOPROTETTORI, MASCHERA FACCIALE"}},
+ SA:{n:"SALDATRICE",r:"USTIONI, PROIEZIONE DI MATERIALE INCANDESCENTE, ELETTROCUZIONE",m:"DISPOSITIVI DI PROTEZIONE ADEGUATI. VERIFICARE INTEGRITA' CAVI PINZA E MASSA, CAVO E PRESA ALIMENTAZIONE.",d:{forno:"GUANTI LUNGHI, MASCHERA, VESTIARIO ANTIFIAMMA, GREMBIULE, GHETTE, MASCHERINA ANTIPOLVERE",cco1:"MASCHERINA FFP3, OTOPROTETTORI, OCCHIALI SCURI, GUANTI LUNGHI, VESTIARIO ANTIFIAMMA, GREMBIULE, COPRI MANICHE, GHETTE"}},
+ CA:{n:"CANNELLO",r:"USTIONI, PROIEZIONE DI MATERIALE INCANDESCENTE",m:"DISPOSITIVI DI PROTEZIONE ADEGUATI. VERIFICARE INTEGRITA' VALVOLE DI SICUREZZA, MANOMETRI, CANNE FLESSIBILI, BECCUCCIO, FISSAGGIO BOMBOLE.",d:{forno:"OCCHIALI SCURI, GUANTI LUNGHI, VESTIARIO ANTIFIAMMA, GREMBIULE, COPRI MANICHE, GHETTE",cco1:"MASCHERINA FFP3, OTOPROTETTORI, OCCHIALI SCURI, GUANTI LUNGHI, VESTIARIO ANTIFIAMMA, GREMBIULE, COPRI MANICHE, GHETTE"}},
+ CI:{n:"CINTURA DI SICUREZZA",r:"CADUTA DALL'ALTO",m:{forno:"UTILIZZO DOPPIO CORDINO PER SALITA SULLA VOLTA IN POSIZIONE APERTA AGGANCIANDOSI ALLA STRUTTURA",cco1:"UTILIZZO PUNTI DI ANCORAGGIO CERTIFICATI PER AGGANCIO CINTURE DI SICUREZZA O PUNTI DI ANCORAGGIO PROVVISORI (FETTUCCE)"},d:{forno:"CINTURA DI SICUREZZA",cco1:"CINTURA DI SICUREZZA"}},
+ CP:{n:"CARROPONTE UTILIZZATO DA OPERATORE DALMINE",r:{forno:"CADUTA MATERIALE DALL'ALTO, URTO E SCHIACCIAMENTO",cco1:"CADUTA MATERIALI DALL'ALTO"},m:{forno:"NON SOSTARE SOTTO CARICHI SOSPESI",cco1:"EVITARE DI SOSTARE NELL'AREA DI MOVIMENTAZIONE"},d:{forno:"",cco1:""}},
+ CD:{n:"CARROPONTE UTILIZZATO DA OPERATORE DELFAPI",r:"CADUTA MATERIALE DALL'ALTO, URTO E SCHIACCIAMENTO",m:"NON SOSTARE SOTTO CARICHI SOSPESI",d:{forno:"",cco1:""}},
+ PA:{n:"POMPA AD ARIA COMPRESSA",r:"SCIVOLAMENTO PER PRESENZA DI GRASSO SU TUTTO L'IMPIANTO",m:"DISPOSITIVI DI PROTEZIONE ADEGUATI. CONTROLLO DELLO STATO DELLE SUOLE",d:{forno:"",cco1:""}},
+ PM:{n:"POMPA MANUALE",r:"RISCHIO CADUTA PER ATTRAVERSAMENTO PARTI NON COPERTE DA GRIGLIATO.",m:"COMPATIBILMENTE CON LA DISPOSIZIONE DEL PUNTO DI INGRASSAGGIO OPERARE DALLA POSIZIONE PIU' BASSA",d:{forno:"",cco1:""}}
+};
+var ORDINE_ATTR=["UM","UE","SA","CA","CI","CP","CD","PA","PM"];
+function rr(a,rep){ return typeof a.r==="string"?a.r:a.r[fam(rep)]; }
+function mm(a,rep){ return typeof a.m==="string"?a.m:a.m[fam(rep)]; }
+function dd(a,rep){ return a.d[fam(rep)]; }
+/* ===== testi per reparto (forno, CCO1, FAS Expander, FAS Linea veloce) ===== */
+function fam(rep){ return rep==="cco1"?"cco1":"forno"; }
+function titoloReparto(doc){ var t={forno:"LAVORI CAMPATA FORNO",cco1:"LAVORI CAMPATA CCO1",fas_exp:"LAVORI FAS EXPANDER",fas_lv:"LAVORI FAS LINEA VELOCE"}[doc.reparto]||"LAVORI";
+  return t+((doc.al&&doc.al!==doc.dal)?" DAL "+dataIt(doc.dal)+" AL "+dataIt(doc.al):" DEL "+dataIt(doc.dal)); }
+function noteReparto(doc){ var d=dataIt(doc.duvri), fas=/^fas/.test(doc.reparto);
+  var n1="NOTA: PER ATTIVITA' CONSIDERATE LAVORI A CALDO, SECONDO LA PROCEDURA OPP24189, ASSICURARSI: CHE NON VI SIANO MATERIALI POTENZIALMENTE INFIAMMABILI, COMBUSTIBILI ED ESPLOSIVI NELL'AREA ADIACENTE ALLA ZONA DI LAVORO E NELL'AREA SOTTOSTANTE. AD ESEMPIO (STRACCI, MATERIALI SPORCHI DI GRASSO, DILUENTI O PRODOTTI INFIAMMABILI, MATERIALE PLASTICO ECC.). "+(fas?"TENERE ESTINTORE IN PROSSIMITA' DELL'ATTIVITA'.":"AVERE ESTINTORE IN PROSSIMITA' DELLA ZONA DI LAVORO.");
+  var n2=fas?"NOTA: DOVUTAMENTE ALLA IRREGOLARITA' DEL PERCORSO SU CUI HA LUOGO L'ATTIVITA', L'OPERATORE PRESTI ATTENZIONE ALLE ZONE PIU' ESPOSTE ALLA CADUTA, UTILIZZANDO L'IMBRAGO ASSICURATO. PER ATTRAVERSAMENTI TRA GRIGLIATI SU DISTANZE MAX 2 MT UTILIZZARE DOPPIE ASSI DA PONTE AFFIANCATE. OPERARE AD UNA DISTANZA DI RICHIAMO DA ALTRI OPERATORI. VERIFICARE, DA PARTE DEL PREPOSTO, LA PRESENZA ATTIVA DELL'OPERATORE SINGOLO ADDETTO ALLA LUBRIFICAZIONE OGNI 20 MINUTI. PULIZIA DELL'AREA DAI MATERIALI DI RISULTA. FARE RIFERIMENTO ANCHE AL DUVRI TENARIS DEL "+d
+    :"NOTA: IL PREPOSTO VERIFICHI LE CONDIZIONI FISICHE DEGLI OPERATORI PRIMA DELL'INIZIO E OGNI 30 MINUTI CIRCA. L'OPERATORE PRESTI ATTENZIONE ALLE ZONE PIU' ESPOSTE ALLA CADUTA, UTILIZZANDO L'IMBRAGO ASSICURATO. PULIRE L'AREA DI INTERVENTO DA EVENTUALI MATERIALI DI RISULTA. OLTRE ALLA PRESENTE, FARE RIFERIMENTO ALL'ANALISI DEI RISCHI IN CALCE AL DUVRI TENARIS DEL "+d;
+  var n3="NOTA: PRIMA DI ESEGUIRE QUALSIASI LAVORO NON INDICATO NELLA ATTUALE ANALISI DEI RISCHI, DEVE ESSERE VALUTATO DAL PREPOSTO, E DEVE ESSERE ESEGUITA L'ANALISI DEI RISCHI IN COLLABORAZIONE CON IL REFERENTE TENARIS";
+  return fas?[n1,n2,n3,"PER ATTIVITA DI SALDATURA ED ATTIVITA DI TAGLIO A CANNELLO TENERE A PORTATA DI MANO L'ESTINTORE CARICO"]:[n1,n2,n3]; }
+function attrezzatureReparto(rep){ return {forno:["UTENSILI MANUALI","UTENSILI ELETTRICI","SALDATRICE","GRUPPO OSSIMETANICO","CARROPONTE"],cco1:["UTENSILI MANUALI","UTENSILI ELETTRICI","SALDATRICE","GRUPPO OSSIMETANICO","CARROPONTE","POMPE PER INGRASSAGGIO"],
+  fas_exp:["UTENSILI MANUALI","CARROPONTE","UTENSILI ELETTRICI","SALDATRICE","CANNELLO","POMPA MANUALE","POMPA ARIA COMPRESSA"],fas_lv:["UTENSILI MANUALI","CARROPONTE","UTENSILI ELETTRICI","SALDATRICE","CANNELLO"]}[rep]; }
+
+function dataIt(iso){ if(!iso) return ""; var p=iso.split("-"); return p[2]+"/"+p[1]+"/"+p[0]; }
+function righeLavoro(l){ var t=[l.nome.toUpperCase()]; if(l.caldo) t.push("ATTIVITA' A CALDO"); if(l.quota) t.push("LAVORO IN QUOTA"); if(l.anticaduta) t.push("UTILIZZO DPI ANTICADUTA"); (l.note||"").split("\n").forEach(function(x){ x=x.trim(); if(x) t.push(x.toUpperCase()); }); return t.join("\n\n"); }
+function nLinee(txt,charsW){ return String(txt).split("\n").reduce(function(s,p){ return s+Math.max(1,Math.ceil(p.length/charsW)); },0); }
+function creaModAR(ExcelJS, doc, logoBuf){
+  var rep=doc.reparto, wb=new ExcelJS.Workbook(), ws=wb.addWorksheet("ATT",{pageSetup:{paperSize:9,orientation:"landscape",fitToPage:true,fitToWidth:1,fitToHeight:0,margins:{left:0.4,right:0.4,top:0.5,bottom:0.5,header:0.2,footer:0.2},printTitlesRow:"1:3"}});
+  var W=[30,26,34,52,36]; ws.columns=W.map(function(w){return {width:w}});
+  var F={name:"Arial",size:9}, FB={name:"Arial",size:9,bold:true}, B={style:"thin",color:{argb:"FF000000"}}, BR={top:B,left:B,bottom:B,right:B};
+  function cel(r,c,v,f,al){ var x=ws.getCell(r,c); x.value=v; x.font=f||F; x.alignment=Object.assign({vertical:"middle",wrapText:true},al||{}); x.border=BR; return x; }
+  // riga 1
+  ws.getRow(1).height=40;
+  cel(1,1,"Mod. A.R",FB,{horizontal:"right",vertical:"bottom"}); cel(1,2,"Delfapi S.r.l.",{name:"Arial",size:11,bold:true},{horizontal:"center"});
+  cel(1,3,"ANALISI DEI RISCHI PER ATTIVITA' SPECIFICA",{name:"Arial",size:11,bold:true},{horizontal:"center"}); ws.mergeCells(1,3,1,4);
+  cel(1,5,"DATA  "+dataIt(doc.duvri),FB,{horizontal:"center"});
+  if(logoBuf){ var id=wb.addImage({buffer:logoBuf,extension:"png"}); ws.addImage(id,{tl:{col:0.08,row:0.15},ext:{width:120,height:30}}); }
+  // riga 2
+  var tit=titoloReparto(doc), per="";
+  ws.getRow(2).height=22; cel(2,1,"ATTIVITA'",FB,{horizontal:"center"}); cel(2,2,tit,{name:"Arial",size:11,bold:true},{horizontal:"center"}); ws.mergeCells(2,2,2,5);
+  // riga 3
+  ws.getRow(3).height=22; ["OPERAZIONI","ATTREZZATURE USATE","RISCHIO ASSOCIATO","MISURE DI PREVENZIONE E SICUREZZA","DPI SPECIFICI"].forEach(function(t,i){ var x=cel(3,i+1,t,FB,{horizontal:"center"}); x.fill={type:"pattern",pattern:"solid",fgColor:{argb:"FFD9D9D9"}}; });
+  // altezze pagina: larghezza totale in punti ~ somma(W)*5.6 ; scala = 770/questo
+  var larg=W.reduce(function(a,b){return a+b},0)*5.6, scala=Math.min(1,770/larg), pagH=(523/scala)-(40+22+22), usata=0, r=4;
+  var CW=W.map(function(w){return Math.floor(w*1.15)});
+  doc.lavori.forEach(function(l){
+    var codici=ORDINE_ATTR.filter(function(k){ return l.attr.indexOf(k)>=0; }); if(!codici.length) codici=["UM"];
+    var testoA=righeLavoro(l), hs=codici.map(function(k){ var a=ATTR[k], m=mm(a,rep);
+      return Math.max(nLinee(a.n,CW[1]),nLinee(rr(a,rep),CW[2]),nLinee(m,CW[3]),nLinee(dd(a,rep),CW[4]))*12+6; });
+    var minA=nLinee(testoA,CW[0])*12+6, tot=hs.reduce(function(a,b){return a+b},0);
+    if(tot<minA){ hs[hs.length-1]+=minA-tot; tot=minA; }
+    if(usata>0 && usata+tot>pagH){ ws.getRow(r-1).addPageBreak(); usata=0; }
+    usata+=tot;
+    var r0=r;
+    codici.forEach(function(k,i){ var a=ATTR[k], m=mm(a,rep);
+      ws.getRow(r).height=hs[i]; cel(r,2,a.n); cel(r,3,rr(a,rep)); cel(r,4,m); cel(r,5,dd(a,rep)); r++; });
+    cel(r0,1,testoA,FB,{vertical:"middle",horizontal:"left"}); for(var q=r0+1;q<r;q++) ws.getCell(q,1).border=BR;
+    if(r-1>r0) ws.mergeCells(r0,1,r-1,1);
+  });
+  // note fisse
+  var note=noteReparto(doc), att=attrezzatureReparto(rep);
+  var hNote=note.reduce(function(s,n){ return s+nLinee(n,Math.floor(W.reduce(function(a,b){return a+b},0)*1.15))*12+8; },0)+(att.length+1)*16;
+  if(usata>0 && usata+hNote>pagH) ws.getRow(r-1).addPageBreak();
+  note.forEach(function(n){ ws.getRow(r).height=nLinee(n,Math.floor(W.reduce(function(a,b){return a+b},0)*1.15))*12+8; cel(r,1,n,FB,{horizontal:"left"}); for(var c=2;c<=5;c++) ws.getCell(r,c).border=BR; ws.mergeCells(r,1,r,5); r++; });
+  // attrezzature e firme
+  var rA=r; cel(r,1,"Attrezzature",FB); cel(r,2,"",F); cel(r,3,"",F); ws.mergeCells(r,2,r,3); r++;
+  att.forEach(function(a){ ws.getRow(r).height=16; cel(r,1,a,F); r++; });
+  cel(rA,4,"PREPOSTO",FB,{horizontal:"center"}); cel(rA,5,"",F); ws.getRow(rA).height=26;
+  cel(rA+1,4,"OPERATORI",FB,{horizontal:"center",vertical:"top"}); cel(rA+1,5,"",F); ws.mergeCells(rA+1,4,r-1,4); ws.mergeCells(rA+1,5,r-1,5);
+  for(var q=rA+1;q<r;q++){ ws.getCell(q,2).border=BR; ws.getCell(q,3).border=BR; } ws.mergeCells(rA+1,2,r-1,3);
+  ws.pageSetup.printArea="A1:E"+(r-1);
+  return wb;
+}
+function nomeFileModAR(doc){ var q=doc.dal.split("-");
+  return q[2]+"_"+q[1]+"_"+q[0]+"_AR_-_RP_"+({forno:"CAMPATA_FORNO",cco1:"CAMPATA_COLAGGIO_CCO1",fas_exp:"LAVORI_FAS_-_EXP",fas_lv:"LAVORI_FAS_-_LV"}[doc.reparto])+".xlsx"; }
+
+/* ===== Mod. A.R. in PDF (per WhatsApp) – jsPDF + autotable ===== */
+function creaPdfModAR(jsPDF, doc, logoDataUrl){
+  var rep=doc.reparto, pdf=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});
+  var M=10, PW=297, PH=210, W=[50,44,55,72,56], FS=7.3, PAD=1.4, LH=FS*0.3528*1.18;
+  var stile={font:"helvetica",fontSize:FS,cellPadding:PAD,lineColor:[0,0,0],lineWidth:0.2,textColor:[0,0,0],valign:"middle",overflow:"linebreak"};
+  var col={0:{cellWidth:W[0]},1:{cellWidth:W[1]},2:{cellWidth:W[2]},3:{cellWidth:W[3]},4:{cellWidth:W[4]}};
+  function linee(t,w){ pdf.setFont("helvetica","normal"); pdf.setFontSize(FS); return pdf.splitTextToSize(String(t||""),w-2*PAD).length; }
+  var tit=titoloReparto(doc);
+  function testata(){
+    pdf.autoTable({startY:M,margin:{left:M,right:M},theme:"grid",styles:Object.assign({},stile,{fontStyle:"bold",halign:"center"}),columnStyles:col,
+      body:[[{content:"\n\nMod. A.R",styles:{halign:"right",valign:"bottom",minCellHeight:12}},{content:"Delfapi S.r.l.",styles:{fontSize:10}},{content:"ANALISI DEI RISCHI PER ATTIVITA' SPECIFICA",colSpan:2,styles:{fontSize:10}},"DATA  "+dataIt(doc.duvri)],
+            ["ATTIVITA'",{content:tit,colSpan:4,styles:{fontSize:10}}],
+            [{content:"OPERAZIONI",styles:{fillColor:[217,217,217]}},{content:"ATTREZZATURE USATE",styles:{fillColor:[217,217,217]}},{content:"RISCHIO ASSOCIATO",styles:{fillColor:[217,217,217]}},{content:"MISURE DI PREVENZIONE E SICUREZZA",styles:{fillColor:[217,217,217]}},{content:"DPI SPECIFICI",styles:{fillColor:[217,217,217]}}]]});
+    if(logoDataUrl) try{ pdf.addImage(logoDataUrl,"PNG",M+2,M+1.5,26,6.4); }catch(e){}
+    return pdf.lastAutoTable.finalY;
+  }
+  var y=testata(), fondo=PH-M;
+  doc.lavori.forEach(function(l){
+    var codici=ORDINE_ATTR.filter(function(k){ return l.attr.indexOf(k)>=0; }); if(!codici.length) codici=["UM"];
+    var testoA=righeLavoro(l), righe=codici.map(function(k){ var a=ATTR[k]; return [a.n,rr(a,rep),mm(a,rep),dd(a,rep)]; });
+    var hs=righe.map(function(r){ return Math.max(linee(r[0],W[1]),linee(r[1],W[2]),linee(r[2],W[3]),linee(r[3],W[4]))*LH+2*PAD; });
+    var tot=hs.reduce(function(a,b){return a+b},0), hA=linee(testoA,W[0])*LH+2*PAD; if(hA>tot){ hs[hs.length-1]+=hA-tot; tot=hA; }
+    if(y+tot>fondo){ pdf.addPage(); y=testata(); }
+    var body=righe.map(function(r,i){ var row=r.map(function(t){ return {content:t,styles:{minCellHeight:hs[i]}}; }); if(i===0) row.unshift({content:testoA,rowSpan:righe.length,styles:{fontStyle:"bold",valign:"middle"}}); return row; });
+    pdf.autoTable({startY:y,margin:{left:M,right:M},theme:"grid",styles:stile,columnStyles:col,body:body,rowPageBreak:"avoid"});
+    y=pdf.lastAutoTable.finalY;
+  });
+  var note=noteReparto(doc), att=attrezzatureReparto(rep);
+  var hN=note.reduce(function(s,n){ return s+linee(n,PW-2*M)*LH+2*PAD; },0)+att.length*LH+2*PAD+4;
+  if(y+hN>fondo){ pdf.addPage(); y=testata(); }
+  pdf.autoTable({startY:y,margin:{left:M,right:M},theme:"grid",styles:Object.assign({},stile,{fontStyle:"bold"}),body:note.map(function(n){return [n]}),rowPageBreak:"avoid"});
+  pdf.autoTable({startY:pdf.lastAutoTable.finalY,margin:{left:M,right:M},theme:"grid",styles:stile,columnStyles:{0:{cellWidth:W[0]},1:{cellWidth:W[1]+W[2]},2:{cellWidth:W[3]},3:{cellWidth:W[4]}},
+    body:[[{content:"Attrezzature",styles:{fontStyle:"bold"}},"",{content:"PREPOSTO",styles:{fontStyle:"bold",halign:"center"}},""],
+          [{content:att.join("\n")},"",{content:"OPERATORI",styles:{fontStyle:"bold",halign:"center",valign:"top"}},""]],rowPageBreak:"avoid"});
+  return pdf;
+}
+/* ===== lettura DUVRI / GANTT Tenaris: righe con DELFAPI SRL ===== */
+var DUVRI_MAP=[
+ [/PULIZIA\s+PLACCHE/,"Pulizia placche"],[/CAMBIO\s+VOLTA/,"Cambio volta"],[/REGOLAZIONE\s+CLAPPA/,"Regolazione clappa EBT"],
+ [/CENTINA/,"Centina controllo pannelli"],[/CARRI\s+TRASFERITORI/,"Manutenzione carri trasferitori"],[/GORGO\w*IAMENTO/,"Saldatura cappa di gorgogliamento"],[/ATTACCO\s+RAPIDO/,"Sostituzione attacco rapido D5"],[/VALVOLA\s+ATTUATA/,"Sostituzione valvola attuata tappo EBT"],[/VALVOLA\s+BASCULAMENTO/,"Sostituzione valvola basculamento"],[/MOTORE\s+OSCILLATORE/,"Sostituzione motore oscillatore L1"],[/FUNE\s+STALLO/,"Sostituzione fune stallo falsa barra L1"],[/MOTORULLO/,"Sostituzione motorullo L4"],[/PERDITA\s+VOLTA/,"Saldatura perdita volta"],
+ [/RIBALTA\s+ELETTRODI/,"Manutenzione ribalta elettrodi"],[/STELLINI/,"Lubrificazione stellini CSB"],[/RIBALTINA/,"Cerniera ribaltina MDT L3"],
+ [/FLUSHING/,"Riparazione tubo flushing L3–4"],[/BLOCK/,"Sostituzione block lance KT3 e KT4"],[/LANC[EI]\s+KT/,"Attività su lance KT"],
+ [/SOSTITUZIONE\s+PANNELL/,"Sostituzione pannello"],[/FLESSIBILE\s+T3/,"Sostituzione flessibile T3"],[/BARRIERA\s+VOLTA/,"Ripristino barriera volta"],
+ [/PACCO\s+GUARNIZ/,"Serraggio pacco guarnizione montante"],[/T2\s*[-–]?\s*T3/,"Regolazione T2–T3"],[/CATENA\s+CARRO/,"Sostituzione catena carro trasferitore L1"],
+ [/PADELLA/,"Sostituzione flessibile padella fase 1"],[/CHIMICA/,"Manutenzione chimica forno KT+FLEX"],[/RUBINETTO/,"Guarnitura rubinetto fase 2"]];
+var RE_CCO1=/^(CCO1|PIANO\s*[+-]?\d|PIANO TERRA|TRASFERITORE|MDT|LETTI|SLINGOFER|ZONA CARRELLINI|PANIERE|CENTRALE IDRAULICA)/i;
+function titolo(s){ return s.toLowerCase().replace(/(^|\s)(\S)/g,function(m,a,b){return a+b.toUpperCase();}).replace(/\b(Ebt|Kt\d?|Fb|L\d|Mdt|Csb|D\d|Ap|T\d)\b/g,function(m){return m.toUpperCase();}); }
+function leggiDuvri(righe, libreria){
+  var re=/\b(Loto|NoMis|Mis)\s+(.+?)\s+DELFAPI\s+S\.?R\.?L\.?\s+(\S+)\s+(.*?)\s+(Nessuna|Lavori.*?)\s+Duvri\s+(\d{2})\/(\d{2})\/(\d{4})\s+\d{2}:\d{2}\s+(\d{2})\/(\d{2})\/(\d{4})/i;
+  var out={forno:[],cco1:[],righe:0};
+  righe.forEach(function(r){ var m=re.exec(r); if(!m) return; out.righe++;
+    var rep=RE_CCO1.test(r.trim())?"cco1":"forno", desc=m[2].trim().toUpperCase(), crit=m[5], d1=m[8]+"-"+m[7]+"-"+m[6], d2=m[11]+"-"+m[10]+"-"+m[9];
+    var lib=null; DUVRI_MAP.some(function(x){ if(x[0].test(desc)){ lib=(libreria[rep]||[]).concat(libreria.forno,libreria.cco1).filter(function(l){return l.nome===x[1]})[0]; return !!lib; } return false; });
+    var l=lib?{nome:lib.nome,caldo:!!lib.caldo,quota:!!lib.quota,anticaduta:!!lib.anticaduta,note:lib.note||"",attr:lib.attr.slice()}
+             :{nome:titolo(desc),caldo:false,quota:false,anticaduta:false,note:"",attr:["UM","UE"],nuovo:true};
+    if(!lib){ if(/SALDATUR/.test(desc)||(rep==="cco1"&&/SOSTITUZIONE/.test(desc))){ l.caldo=true; l.attr.push("SA","CA"); } }
+    if(/quota/i.test(crit)){ l.quota=true; l.anticaduta=true; if(l.attr.indexOf("CI")<0) l.attr.push("CI"); }
+    if(/caldo|saldatura|fiamma/i.test(crit)){ l.caldo=true; ["SA","CA"].forEach(function(k){ if(l.attr.indexOf(k)<0) l.attr.push(k); }); }
+    if(/confinat/i.test(crit)&&!/CONFINATO/.test(l.note)) l.note=(l.note?l.note+"\n":"")+"ATTIVITA' IN AMBIENTE CONFINATO\nPROCEDURA SPECIFICA PER AMBIENTE CONFINATO\nBARELLA A DISPOSIZIONE";
+    l.d1=d1; l.d2=d2;
+    if(!out[rep].some(function(x){return x.nome===l.nome})) out[rep].push(l);
+  });
+  return out;
+}
+
+
+var LIBRERIA={
+ forno:[
+  {nome:"Pulizia placche",caldo:1,quota:1,anticaduta:1,note:'PRIMA DI SALIRE A PIANO EBT, AVERE CONFERMA DA REFERENTE "TENARIS"',attr:["UM","UE","CI"]},
+  {nome:"Cambio volta",caldo:1,quota:1,anticaduta:1,note:'INSTALLAZIONE LINEA VITA "DALMINE"',attr:["UM","UE","SA","CA","CI","CP"]},
+  {nome:"Saldatura perdita volta",caldo:1,attr:["UM","UE","SA","CA"]},
+  {nome:"Regolazione clappa EBT",caldo:1,attr:["UM","UE","SA","CA"]},
+  {nome:"Sostituzione pannello",caldo:1,attr:["UM","UE","SA","CA","CP"]},
+  {nome:"Sostituzione block lance KT3 e KT4",caldo:1,attr:["UM","UE","SA","CA","CP"]},
+  {nome:"Attività su lance KT",attr:["UM","UE"]},
+  {nome:"Manutenzione chimica forno KT+FLEX",attr:["UM","UE"]},
+  {nome:"Centina (controllo visivo)",attr:["UM","CP"]},
+  {nome:"Centina controllo pannelli",caldo:1,note:"ATTIVITA' IN AMBIENTE CONFINATO\nPROCEDURA SPECIFICA PER AMBIENTE CONFINATO\nBARELLA A DISPOSIZIONE\nFERMARE ALTRE ATTIVITA' PER AVERE A DISPOSIZIONE NR 5 PERSONE",attr:["UM","UE","SA","CA","CP"]},
+  {nome:"Saldatura cappa di gorgogliamento",caldo:1,quota:1,anticaduta:1,attr:["UM","UE","SA","CA","CI"]},
+  {nome:"Sostituzione attacco rapido D5",attr:["UM","UE"]},
+  {nome:"Sostituzione valvola attuata tappo EBT",attr:["UM","UE"]},
+  {nome:"Sostituzione valvola basculamento",attr:["UM","UE"]},
+  {nome:"Sostituzione flessibile T3",attr:["UM","UE"]},
+  {nome:"Guarnitura rubinetto fase 2",attr:["UM","UE"]},
+  {nome:"Manutenzione ribalta elettrodi",caldo:1,attr:["UM","UE","SA","CA","CP"]},
+  {nome:"Sostituzione flessibile padella fase 1",quota:1,anticaduta:1,attr:["UM","UE","CI"]},
+  {nome:"Ripristino barriera volta",caldo:1,quota:1,anticaduta:1,attr:["UM","UE","SA","CA","CI"]},
+  {nome:"Serraggio pacco guarnizione montante",quota:1,anticaduta:1,attr:["UM","UE","CI"]},
+  {nome:"Regolazione T2–T3",caldo:1,quota:1,anticaduta:1,attr:["UM","UE","SA","CA","CI"]}],
+ cco1:[
+  {nome:"Sostituzione catena carro trasferitore L1",attr:["UM","UE","CP"]},
+  {nome:"Manutenzione carri trasferitori",caldo:1,attr:["UM","UE","SA","CA","PA","PM"]},
+  {nome:"Manutenzione carri trasferitori + controllo funi",caldo:1,quota:1,anticaduta:1,note:"INSTALLAZIONE LINEA VITA\nATTENZIONE ORGANI IN MOVIMENTO\nMOVIMENTAZIONE ESEGUITA DA PREPOSTO TENARIS",attr:["UM","UE","SA","CA","PA","PM","CI"]},
+  {nome:"Sostituzione motore oscillatore L1",caldo:1,attr:["UM","UE","SA","CA"]},
+  {nome:"Sostituzione fune stallo falsa barra L1",caldo:1,attr:["UM","UE","SA","CA"]},
+  {nome:"Sostituzione motorullo L4",caldo:1,attr:["UM","UE","SA","CA","CP"]},
+  {nome:"Lubrificazione stellini CSB",attr:["UM","UE","PA","PM"]},
+  {nome:"Cerniera ribaltina MDT L3",caldo:1,quota:1,anticaduta:1,attr:["UM","UE","SA","CA","CI"]},
+  {nome:"Riparazione tubo flushing L3–4",caldo:1,attr:["UM","UE","SA","CA"]}],
+ fas_exp:[
+  {nome:"Lubrificazione via rulli entrata e allunghe cilindri",note:"AREA ESPANSORE",attr:["UM","PA","PM"]},
+  {nome:"Lubrificazione via rulli uscita e terne",note:"AREA ESPANSORE",attr:["UM","PA","PM"]},
+  {nome:"Fissaggio leva di comando v.r. uscita exp",caldo:1,note:"AREA ESPANSORE",attr:["UM","UE","SA","CA"]},
+  {nome:"Sostituzione frizione + magnete cilindro dx reeler",note:"L'ATTIVITA' NON PUO' ESSERE ESEGUITA IN CASO DI CARICAMENTO TUBI SU PC1 CON GRU 2398\nAREA REELER",attr:["UM","UE"]},
+  {nome:"Sostituzione gradino cambio punta reeler",caldo:1,note:"L'ATTIVITA' NON PUO' ESSERE ESEGUITA IN CASO DI CARICAMENTO TUBI SU PC1 CON GRU 2398\nAREA REELER",attr:["UM","UE","SA","CA"]}],
+ fas_lv:[
+  {nome:"Allineamento VR ingresso e albero leve adagiatrici",caldo:1,note:"AUTORIZZAZIONE UTILIZZO GRU 137\nAREA RESTELLINI 1",attr:["UM","UE","SA","CA","CD"]},
+  {nome:"Sost. ruote/alberi carro e allineamento cremagliera",caldo:1,note:"AUTORIZZAZIONE UTILIZZO GRU 19/12\nZONA PROVA IDRAULICA",attr:["UM","UE","SA","CA","CD"]}]
+};
+var ICONE={UM:"🔧",UE:"🔌",SA:"⚡",CA:"🔥",CI:"🦺",CP:"🏗️",CD:"🏗️",PA:"💨",PM:"🛢️"};
+var NOMI_A={UM:"Utensili manuali",UE:"Utensili elettrici",SA:"Saldatrice",CA:"Cannello",CI:"Cintura di sicurezza",CP:"Carroponte (gruista Tenaris)",CD:"Carroponte (gruista Delfapi)",PA:"Pompa aria compressa",PM:"Pompa manuale"};
+var DOC={reparto:"forno",dal:"",al:"",duvri:"",lavori:[]}, ULTIMO=null;
+function norm(s){ return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim(); }
+function salva(){ try{ localStorage.setItem("mar-bozza",JSON.stringify(DOC)); }catch(e){} }
+function esito(t,c){ var e=$("#esito"); e.className="esito on "+c; e.textContent=t; }
+function personali(){ try{ return JSON.parse(localStorage.getItem("mar-libreria")||"{}"); }catch(e){ return {}; } }
+function libreria(){ var p=personali()[DOC.reparto]||[]; return (LIBRERIA[DOC.reparto]||[]).concat(p.filter(function(x){ return !LIBRERIA[DOC.reparto].some(function(y){return y.nome.toLowerCase()===x.nome.toLowerCase()}); })); }
+function copia(l){ return {nome:l.nome,caldo:!!l.caldo,quota:!!l.quota,anticaduta:!!l.anticaduta,note:l.note||"",attr:(l.attr||["UM"]).slice()}; }
+function disegna(){
+  document.querySelectorAll("#rep button").forEach(function(b){ b.classList.toggle("on",b.dataset.r===DOC.reparto); });
+  var usati=DOC.lavori.map(function(l){return l.nome.toLowerCase()});
+  var q=norm($("#cerca-lav").value), parole=q.split(" ").filter(Boolean), lib=libreria();
+  var vis=lib.map(function(l,i){return {l:l,i:i}}).filter(function(x){ var n=norm(x.l.nome+" "+(x.l.note||"")); return parole.every(function(p){ return n.indexOf(p)>=0; }); });
+  $("#libr").innerHTML=vis.map(function(x){ return '<button data-i="'+x.i+'" class="'+(usati.indexOf(x.l.nome.toLowerCase())>=0?"usato":"")+'">'+esc(x.l.nome)+'</button>'; }).join("")+
+    (q&&!vis.length?'<button class="nuovo-da-cerca" id="da-cerca">+ Aggiungi «'+esc($("#cerca-lav").value.trim())+'» come lavoro nuovo</button>':'');
+  document.querySelectorAll("#libr button[data-i]").forEach(function(b){ b.onclick=function(){ var l=lib[+b.dataset.i]; DOC.lavori.push(copia(l)); $("#cerca-lav").value=""; salva(); disegna(); esito("Aggiunto: "+l.nome,"ok"); }; });
+  if($("#da-cerca")) $("#da-cerca").onclick=function(){ var t=$("#cerca-lav").value.trim(); DOC.lavori.push({nome:t,caldo:false,quota:false,anticaduta:false,note:"",attr:["UM"]}); $("#cerca-lav").value=""; salva(); disegna(); esito("Aggiunto: ora tocca le avvertenze e le attrezzature giuste.","info"); };
+  $("#n-lav").textContent=DOC.lavori.length?DOC.lavori.length+(DOC.lavori.length===1?" lavoro":" lavori"):"";
+  $("#lavori").innerHTML=DOC.lavori.length?DOC.lavori.map(function(l,i){
+    var f=[["caldo","🔥 Attività a caldo"],["quota","🪜 Lavoro in quota"],["anticaduta","🦺 DPI anticaduta"]];
+    return '<div class="lav"><div class="lav-t"><input data-i="'+i+'" value="'+esc(l.nome)+'" aria-label="Nome del lavoro"><button data-su="'+i+'" aria-label="Sposta su">↑</button><button class="x" data-x="'+i+'" aria-label="Togli">×</button></div>'+(l.nuovo?'<span class="badge">Nuovo dal DUVRI: controlla avvertenze e attrezzature</span>':'')+
+      '<div class="lab">Avvertenze</div><div class="chips">'+f.map(function(x){ return '<button class="chip f'+(l[x[0]]?" on":"")+'" data-i="'+i+'" data-f="'+x[0]+'">'+x[1]+'</button>'; }).join("")+'</div>'+
+      '<div class="lab">Attrezzature usate</div><div class="chips">'+Object.keys(NOMI_A).filter(function(k){ return k!=="CD"||/^fas/.test(DOC.reparto)||l.attr.indexOf("CD")>=0; }).map(function(k){ return '<button class="chip a'+(l.attr.indexOf(k)>=0?" on":"")+'" data-i="'+i+'" data-a="'+k+'"><span class="e">'+ICONE[k]+'</span>'+NOMI_A[k]+'</button>'; }).join("")+'</div>'+
+      '<textarea class="nota" data-i="'+i+'" placeholder="Altre indicazioni (es. PRIMA DI SALIRE A PIANO EBT, AVERE CONFERMA DA REFERENTE TENARIS)">'+esc(l.note||"")+'</textarea></div>';
+  }).join(""):'<div class="vuoto">Ancora nessun lavoro.</div>';
+  document.querySelectorAll(".lav-t input").forEach(function(x){ x.onchange=function(){ DOC.lavori[+x.dataset.i].nome=x.value.trim()||"LAVORO"; salva(); }; });
+  document.querySelectorAll(".lav-t .x").forEach(function(b){ b.onclick=function(){ if(confirm("Togliere questo lavoro?")){ DOC.lavori.splice(+b.dataset.x,1); salva(); disegna(); } }; });
+  document.querySelectorAll("[data-su]").forEach(function(b){ b.onclick=function(){ var i=+b.dataset.su; if(i>0){ var t=DOC.lavori[i-1]; DOC.lavori[i-1]=DOC.lavori[i]; DOC.lavori[i]=t; salva(); disegna(); } }; });
+  document.querySelectorAll(".chip.f").forEach(function(b){ b.onclick=function(){ var l=DOC.lavori[+b.dataset.i]; delete l.nuovo; l[b.dataset.f]=!l[b.dataset.f]; salva(); disegna(); }; });
+  document.querySelectorAll(".chip.a").forEach(function(b){ b.onclick=function(){ var l=DOC.lavori[+b.dataset.i], k=b.dataset.a, p=l.attr.indexOf(k); delete l.nuovo;
+    if(p>=0) l.attr.splice(p,1); else { l.attr.push(k);
+      if((k==="SA"||k==="CA")&&!l.caldo){ l.caldo=true; esito("Con saldatrice o cannello ho segnato anche ATTIVITÀ A CALDO.","info"); }
+      if(k==="CI"&&!(l.quota&&l.anticaduta)){ l.quota=true; l.anticaduta=true; esito("Con la cintura ho segnato anche LAVORO IN QUOTA e DPI ANTICADUTA.","info"); } }
+    salva(); disegna(); }; });
+  document.querySelectorAll(".nota").forEach(function(x){ x.oninput=function(){ DOC.lavori[+x.dataset.i].note=x.value; salva(); }; });
+}
+function controlla(){
+  if(!DOC.dal) return "Metti la data dei lavori (Dal).";
+  if(!DOC.duvri) return "Metti la data del DUVRI Tenaris.";
+  if(DOC.al&&DOC.al<DOC.dal) return "La data «Al» è prima di «Dal».";
+  if(!DOC.lavori.length) return "Aggiungi almeno un lavoro.";
+  var s=DOC.lavori.filter(function(l){ return (l.attr.indexOf("SA")>=0||l.attr.indexOf("CA")>=0)&&!l.caldo; })[0];
+  if(s) return "«"+s.nome+"» usa saldatrice o cannello: va segnato ATTIVITÀ A CALDO.";
+  return "";
+}
+function caricaExcelJS(){ return window.ExcelJS?Promise.resolve():new Promise(function(ok,ko){ var s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"; s.onload=ok; s.onerror=ko; document.head.appendChild(s); }); }
+var LOGO_URL=null, PDF_PRONTO=false;
+function carica(src){ return new Promise(function(ok,ko){ var s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=ko; document.head.appendChild(s); }); }
+function preparaPdf(){
+  if(PDF_PRONTO) return Promise.resolve();
+  var p1=(window.jspdf?Promise.resolve():carica("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js")).then(function(){ return window.jspdf&&window.jspdf.jsPDF.API.autoTable?null:carica("https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"); });
+  var p2=LOGO_URL?Promise.resolve():fetch("logo.png").then(function(r){return r.blob()}).then(function(b){ return new Promise(function(ok){ var fr=new FileReader(); fr.onload=function(){ LOGO_URL=fr.result; ok(); }; fr.readAsDataURL(b); }); }).catch(function(){});
+  return Promise.all([p1,p2]).then(function(){ PDF_PRONTO=true; });
+}
+var DUVRI_LETTO=null;
+function venerdiPrima(iso){ if(!iso) return ""; var d=new Date(iso+"T12:00:00"); var k=(d.getDay()+2)%7; d.setDate(d.getDate()-k); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function caricaPdfJs(){ return window.pdfjsLib?Promise.resolve():carica("https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js").then(function(){ pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js"; }); }
+function righePdf(buf){ return pdfjsLib.getDocument({data:new Uint8Array(buf)}).promise.then(function(doc){ var righe=[], p=Promise.resolve();
+  for(var n=1;n<=doc.numPages;n++)(function(n){ p=p.then(function(){ return doc.getPage(n).then(function(pg){ return pg.getTextContent(); }).then(function(tc){ var m={};
+    tc.items.forEach(function(it){ if(!it.str.trim()) return; var y=Math.round(it.transform[5]/2)*2; (m[y]=m[y]||[]).push(it); });
+    Object.keys(m).map(Number).sort(function(a,b){return b-a}).forEach(function(y){ righe.push(m[y].sort(function(a,b){return a.transform[4]-b.transform[4]}).map(function(i){return i.str.trim()}).join(" ").replace(/\s+/g," ")); }); }); }); })(n);
+  return p.then(function(){ return righe; }); }); }
+function riempiDaDuvri(rep){ var L=DUVRI_LETTO&&DUVRI_LETTO[rep]; if(!L||!L.length) return false;
+  DOC.lavori=L.map(function(l){ var c=copia(l); if(l.nuovo) c.nuovo=true; return c; });
+  var d=L.map(function(l){return l.d1}).concat(L.map(function(l){return l.d2})).sort(); DOC.dal=d[0]; DOC.al=d[d.length-1]===d[0]?"":d[d.length-1];
+  if(!DOC.duvri) DOC.duvri=venerdiPrima(DOC.dal);
+  ["dal","al","duvri"].forEach(function(k){ $("#"+k).value=DOC[k]||""; }); salva(); disegna(); return true; }
+$("#duvri-file").onchange=function(){ var f=this.files&&this.files[0]; this.value=""; if(!f) return;
+  esito("Leggo il DUVRI…","info"); $("#esito").scrollIntoView({block:"center"});
+  Promise.all([caricaPdfJs(),f.arrayBuffer()]).then(function(x){ return righePdf(x[1]); }).then(function(righe){
+    var lib={forno:LIBRERIA.forno.concat((personali().forno||[])),cco1:LIBRERIA.cco1.concat((personali().cco1||[]))};
+    DUVRI_LETTO=leggiDuvri(righe,lib); var m=/(\d{4})-(\d{2})-(\d{2})/.exec(f.name); DUVRI_LETTO.data=m?m[1]+"-"+m[2]+"-"+m[3]:"";
+    var nf=DUVRI_LETTO.forno.length, nc=DUVRI_LETTO.cco1.length;
+    if(!nf&&!nc){ var testo=righe.join(" ").length; return esito(testo<200?"Questo PDF è una fotografia dello schermo (come i GANTT FAS): non contiene testo da leggere. Inserisci i lavori con la ricerca qui sotto.":"Nel PDF non ho trovato righe con DELFAPI SRL. È il DUVRI giusto?","ko"); }
+    if(DOC.lavori.length&&!confirm("Sostituisco i lavori già inseriti con quelli del DUVRI?")) return;
+    if(!(DUVRI_LETTO[DOC.reparto]||[]).length) DOC.reparto=nf?"forno":"cco1";
+    riempiDaDuvri(DOC.reparto);
+    var nuovi=DOC.lavori.filter(function(l){return l.nuovo}).length;
+    esito("Dal DUVRI: "+nf+" lavori campata forno e "+nc+" CCO1 per Delfapi. Ora vedi "+(DOC.reparto==="cco1"?"CCO1":"il forno")+(nc&&nf?"; tocca l'altro reparto per caricare i suoi":"")+". "+(nuovi?nuovi+" lavori non sono in libreria: controlla avvertenze e attrezzature (riquadro giallo).":"")+" Data DUVRI proposta: "+dataIt(DOC.duvri)+" (il venerdì prima): controllala.","ok");
+  }).catch(function(){ esito("Non sono riuscito a leggere il PDF (serve la connessione la prima volta).","ko"); });
+};
+function crea(){
+  var err=controlla(); if(err) return esito(err,"ko");
+  var b=$("#crea"); b.disabled=true; esito("Preparo il file…","info");
+  // i lavori scritti a mano entrano nella libreria personale
+  var p=personali(); p[DOC.reparto]=p[DOC.reparto]||[];
+  DOC.lavori.forEach(function(l){ if(!(LIBRERIA[DOC.reparto]||[]).some(function(y){return y.nome.toLowerCase()===l.nome.toLowerCase()}) && !p[DOC.reparto].some(function(y){return y.nome.toLowerCase()===l.nome.toLowerCase()})) p[DOC.reparto].push(copia(l)); });
+  try{ localStorage.setItem("mar-libreria",JSON.stringify(p)); }catch(e){}
+  Promise.all([caricaExcelJS(), fetch("logo.png").then(function(r){return r.arrayBuffer()}).catch(function(){return null})]).then(function(x){
+    return creaModAR(window.ExcelJS,DOC,x[1]).xlsx.writeBuffer();
+  }).then(function(buf){
+    var nome=nomeFileModAR(DOC), blob=new Blob([buf],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+    ULTIMO=new File([blob],nome,{type:blob.type});
+    var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=nome; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },4000);
+    b.disabled=false;
+    esito("Creato «"+nome+"»: lo trovi nei Download. Aprilo, controlla l'anteprima di stampa e firmate.","ok");
+  }).catch(function(){ b.disabled=false; esito("Non sono riuscito a creare il file: serve la connessione la prima volta.","ko"); });
+}
+document.querySelectorAll("#rep button").forEach(function(b){ b.onclick=function(){ if(DOC.reparto===b.dataset.r) return; var dal=DUVRI_LETTO&&DUVRI_LETTO[b.dataset.r]&&DUVRI_LETTO[b.dataset.r].length; if(DOC.lavori.length&&!dal&&!confirm("Cambiando reparto tolgo i lavori inseriti. Procedo?")) return; DOC.reparto=b.dataset.r; DOC.lavori=[]; if(dal){ riempiDaDuvri(DOC.reparto); esito("Caricati i "+DOC.lavori.length+" lavori "+(DOC.reparto==="cco1"?"CCO1":"del forno")+" dal DUVRI.","ok"); } else { salva(); disegna(); } }; });
+["dal","al","duvri"].forEach(function(k){ $("#"+k).onchange=function(){ DOC[k]=this.value; salva(); }; });
+$("#scrivi").onclick=function(){ var t=(prompt("Scrivi il lavoro da svolgere:")||"").trim(); if(!t) return; DOC.lavori.push({nome:t,caldo:false,quota:false,anticaduta:false,note:"",attr:["UM"]}); salva(); disegna(); esito("Aggiunto: ora tocca le avvertenze e le attrezzature giuste.","info"); setTimeout(function(){ var c=document.querySelectorAll(".lav"); c[c.length-1].scrollIntoView({behavior:"smooth",block:"center"}); },50); };
+$("#crea").onclick=crea;
+$("#cerca-lav").addEventListener("input",function(){ disegna(); });
+$("#condividi").onclick=function(){
+  var err=controlla(); if(err){ esito(err,"ko"); $("#esito").scrollIntoView({block:"center"}); return; }
+  if(!PDF_PRONTO){ esito("Un attimo: preparo il PDF, poi premi di nuovo.","info"); $("#esito").scrollIntoView({block:"center"}); preparaPdf().then(function(){ esito("Pronto: premi di nuovo «Manda su WhatsApp».","ok"); }).catch(function(){ esito("Serve la connessione la prima volta.","ko"); }); return; }
+  var pdf=creaPdfModAR(window.jspdf.jsPDF,DOC,LOGO_URL), nome=nomeFileModAR(DOC).replace(/\.xlsx$/,".pdf");
+  var f=new File([pdf.output("blob")],nome,{type:"application/pdf"});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){ navigator.share({files:[f],title:nome}).catch(function(){}); esito("Nell'elenco che si apre scegli WhatsApp e poi il contatto o il gruppo.","info"); }
+  else { pdf.save(nome); esito("Questo telefono non permette di allegarlo da qui: ho scaricato «"+nome+"», allegalo da WhatsApp (graffetta, Documento).","info"); }
+  $("#esito").scrollIntoView({block:"center"});
+};
+$("#svuota").onclick=function(){ if(confirm("Ricominciare da capo? Si perdono i lavori inseriti.")){ DOC={reparto:DOC.reparto,dal:"",al:"",duvri:"",lavori:[]}; ["dal","al","duvri"].forEach(function(k){$("#"+k).value=""}); salva(); disegna(); } };
+$("#esci").onclick=esci;
+accesso("Mod. A.R. settimanale","modar",function(r){
+  if(r){ $("#esci").hidden=false; $("#sotto").textContent="Analisi dei rischi · "+r.nome; }
+  else { $("#modo").hidden=false; $("#modo").textContent="Il file Excel si crea direttamente sul telefono: funziona già."; }
+  try{ var b=JSON.parse(localStorage.getItem("mar-bozza")||"null"); if(b) DOC=b; }catch(e){}
+  ["dal","al","duvri"].forEach(function(k){ $("#"+k).value=DOC[k]||""; });
+  disegna(); preparaPdf().catch(function(){});
+});
+
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("./sw.js").catch(function(){}); }
+})();
+</script>
+</body>
+</html>

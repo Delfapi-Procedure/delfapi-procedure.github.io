@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giornaliera lavori – Delfapi</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#003d63">
+<link rel="icon" type="image/png" href="icona-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--blu:#005387;--blu-scuro:#003d63;--carta:#fff;--fondo:#eef1f4;--riga:#cfd6dd;--testo:#141414;--testo-2:#4a5560;--giallo:#f2b600;--rosso:#b4231a;--ok:#1e7a3a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--blu:#2f8fd0;--blu-scuro:#005387;--carta:#1a1e23;--fondo:#0d0f11;--riga:#333b44;--testo:#f1f3f5;--testo-2:#aab4be}}
+:root[data-theme="dark"]{color-scheme:dark;--blu:#2f8fd0;--blu-scuro:#005387;--carta:#1a1e23;--fondo:#0d0f11;--riga:#333b44;--testo:#f1f3f5;--testo-2:#aab4be}
+*,*::before,*::after{box-sizing:inherit}html,body{margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--fondo);color:var(--testo);font-family:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.4}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--blu-scuro);z-index:10}
+h1,h2,h3{font-family:"Barlow Condensed","Barlow",Impact,"Arial Narrow",sans-serif;margin:0;line-height:1.05}
+button{font:inherit;color:inherit;cursor:pointer}:focus-visible{outline:3px solid var(--giallo);outline-offset:2px}
+.testata{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--blu-scuro);color:#fff;border-bottom:6px solid var(--giallo)}
+.testata-in{max-width:760px;margin:0 auto;padding:12px 16px 10px;display:flex;align-items:center;gap:12px}
+.testata img{width:48px;height:48px;border-radius:50%;background:#fff;padding:8px 7px 6px;object-fit:contain;flex:0 0 auto}
+.testata h1{font-size:clamp(21px,6vw,28px);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap}.testata .sotto{font-size:14px;opacity:.9;margin-top:2px}
+.testata-in>div{flex:1 1 auto;min-width:0}
+.esci{flex:0 0 auto;border:0;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;padding:8px 14px;font-weight:600}.esci[hidden]{display:none}
+.indietro{display:none;width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,.14);border:0;color:#fff;font-size:26px;flex:0 0 auto}.indietro.on{display:block}
+.pagina{max-width:760px;margin:0 auto;padding:16px 16px 40px}
+.avviso{background:#fff6d6;color:#141414;border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+.btn.verde{background:var(--ok);border-color:var(--ok)}.btn.annulla{background:transparent;color:var(--testo-2);border-color:var(--riga)}
+.campo{display:block;margin-top:12px}.campo span{display:block;font-weight:600;margin-bottom:4px}
+.campo input,.campo textarea{width:100%;min-height:48px;border:2px solid var(--riga);border-radius:10px;background:var(--fondo);color:var(--testo);padding:10px 12px;font:inherit}
+.campo textarea{min-height:80px;resize:vertical}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 18px;border-radius:12px;border:2px solid var(--blu);background:var(--blu);color:#fff;font-weight:700;font-size:17px;text-decoration:none}
+.btn.sec{background:transparent;color:var(--blu)}.btn[disabled]{opacity:.5}
+.esito{margin-top:12px;padding:12px;border-radius:10px;font-weight:600;display:none}.esito.on{display:block}.esito.ok{background:#dff5d8;color:#14501f}.esito.ko{background:#ffd6d1;color:#7a120c}.esito.info{background:var(--fondo);color:var(--testo-2)}
+.vuoto{color:var(--testo-2);text-align:center;padding:30px 10px}
+.torna{display:block;text-align:center;margin-top:20px;color:var(--blu);font-weight:600}
+.pin{position:fixed;inset:0;z-index:30;background:var(--blu-scuro);color:#fff;display:flex;align-items:center;justify-content:center;padding:24px}
+.pin-box{width:100%;max-width:340px;text-align:center}.pin-box h1{font-size:28px;text-transform:uppercase;margin:12px 0 6px}
+.pin-box input{width:100%;height:58px;border:0;border-radius:12px;font:700 30px "Barlow Condensed",sans-serif;letter-spacing:.3em;text-align:center;color:#141414;background:#fff}
+.pin-box button{margin-top:12px;width:100%;min-height:52px;border:0;border-radius:12px;background:var(--giallo);color:#141414;font-weight:700;font-size:18px}
+.pin-box .err{min-height:22px;margin-top:8px;color:#ffd6d1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.data{display:flex;align-items:center;gap:10px;font-weight:600;background:var(--carta);border:1px solid var(--riga);border-radius:12px;padding:10px 12px}
+.data input{flex:1;min-height:44px;border:2px solid var(--riga);border-radius:10px;background:var(--fondo);color:var(--testo);font:600 18px "Barlow",sans-serif;padding:0 10px}
+.passo{display:flex;align-items:center;gap:10px;font-size:26px;margin:20px 0 10px}.passo>span:first-child{flex:0 0 34px;height:34px;border-radius:50%;background:#e8590c;color:#fff;display:grid;place-items:center;font-size:21px}
+.passo small{font:600 15px "Barlow",sans-serif;color:#e8590c}
+.tess{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tess button{border:2px solid var(--riga);background:var(--carta);border-radius:12px;min-height:54px;padding:8px 10px;font-weight:600;font-size:16px;line-height:1.15;text-align:left;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.tess button.on{background:var(--blu);border-color:var(--blu);color:#fff}
+.tess button.fatto::after{content:" ✓";color:var(--ok)}.tess button.on.fatto::after{color:#fff}
+.lavori button{border-left:8px solid #f2b600}.lavori button.nuovo{border-style:dashed;border-left-width:2px;color:var(--blu);text-align:center}
+.ore{display:flex;gap:8px;flex-wrap:wrap}.ore button{min-width:58px;min-height:50px;border:2px solid var(--riga);border-radius:12px;background:var(--carta);font:700 22px "Barlow Condensed",sans-serif}.ore button.on{background:#e8590c;border-color:#e8590c;color:#fff}
+.aiuto{color:var(--testo-2);font-size:14px;margin:-4px 2px 8px}
+.foglio{background:#fff;color:#141414;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.15);overflow:hidden}
+.foglio .vuoto{padding:22px 12px;color:#6a7480;text-align:center}
+.gr{border-bottom:3px solid #d6e2ee}
+.gt{display:flex;align-items:center;gap:10px;background:#eef4fa;border-left:8px solid #f2b600;padding:8px 10px}
+.gt>div{flex:1;min-width:0}.gt small{display:block;font:600 12px "Barlow",sans-serif;text-transform:uppercase;letter-spacing:.05em;color:#4a5560}
+.gt b{display:block;font:700 20px/1.1 "Barlow Condensed",sans-serif;color:#003d63}.gt>span{font:700 18px "Barlow Condensed",sans-serif;color:#4a5560;white-space:nowrap}
+.r2{display:grid;grid-template-columns:1fr 58px 36px;align-items:center;min-height:46px;border-top:1px solid #e3ebf3;padding-left:18px}
+.r2 span{font-size:17px}
+.r2 .o{font:700 21px "Barlow Condensed",sans-serif;text-align:right;border:0;background:transparent;width:100%;color:#141414;padding:4px 6px}
+.r2 .x{border:0;background:transparent;color:#b4231a;font-size:22px}
+.tot2{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;padding:10px 14px;background:#eef4fa;font-weight:700}.tot2 b{font:700 22px "Barlow Condensed",sans-serif}
+.btn.verde{background:var(--ok);border-color:var(--ok)}
+.azioni{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.azioni .btn{flex:1 1 150px}
+.svuota{border:0;background:transparent;color:var(--rosso);font-weight:600;margin-top:10px;padding:6px 0}
+.campo textarea{width:100%}
+#pr{display:none}
+@media print{body::before,.testata,.pagina,.pin{display:none!important}body{background:#fff}#pr{display:block;font-family:Arial,sans-serif;font-size:12px;color:#000}#pr table{width:100%;border-collapse:collapse}#pr td,#pr th{border:1px solid #000;padding:6px}#pr th{background:#ddd;text-align:left}@page{size:A4;margin:14mm}}
+
+.aree{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.aree button{border:2px solid #f2b600;border-radius:10px;background:var(--carta);min-height:50px;font:700 17px "Barlow Condensed",sans-serif;line-height:1.05;padding:4px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center}.aree button small{font:600 12px "Barlow",sans-serif;color:var(--testo-2)}.aree button.on{background:#f2b600;color:#141414}.aree button.on small{color:#141414}
+.lav{position:relative;display:flex}.lav button:first-child{flex:1;padding-right:40px}.lav .tog{position:absolute;top:4px;right:4px;width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--testo-2);font-size:22px;line-height:1;padding:0;min-height:0;border-left:0;text-align:center}.lav .tog:active{background:var(--rosso);color:#fff}
+.ripr{grid-column:1/-1;border:0!important;background:transparent!important;color:var(--blu);font-weight:600;min-height:40px!important;text-align:center!important}
+#nomi .nuovo{grid-column:1/-1;border:2px dashed var(--riga);background:transparent;color:var(--blu);text-align:center;min-height:46px;border-radius:12px;font-weight:600}
+
+</style>
+</head>
+<body>
+<header class="testata"><div class="testata-in">
+  <img src="marchio.png" alt="Delfapi">
+  <div><h1>Giornaliera lavori</h1><div class="sotto" id="sotto">Cantiere Tenaris Dalmine</div></div>
+  <button class="esci" id="esci" hidden>Esci</button>
+</div></header>
+<main class="pagina">
+  <div class="avviso" id="modo" hidden></div>
+  <label class="data">Giornata del <input type="date" id="data"></label>
+
+  <h2 class="passo"><span>1</span> Chi <small id="n-sel"></small></h2>
+  <div class="tess" id="nomi"></div>
+
+  <h2 class="passo"><span>2</span> Quante ore</h2>
+  <div class="ore" id="ore"><button data-o="8" class="on">8</button><button data-o="4">4</button><button data-o="2">2</button><button data-o="1">1</button><button data-o="altro">altro</button></div>
+
+  <h2 class="passo"><span>3</span> Che lavoro</h2>
+  <p class="aiuto">Scegli il cantiere, poi tocca il lavoro: i nomi scelti vanno nel foglio con le ore indicate.</p>
+  <div class="aree" id="aree"></div>
+  <div class="tess lavori" id="lavori"></div>
+
+  <h2 class="passo"><span>4</span> Il foglio della giornata</h2>
+  <div class="foglio" id="foglio"></div>
+  <label class="campo"><span>Note della giornata (facoltative)</span><textarea id="nota" placeholder="Es. fermata forno, accesso piano EBT dalle 10"></textarea></label>
+  <div class="azioni"><button class="btn verde" id="invia">Invia in ufficio</button><button class="btn sec" id="stampa">Stampa / PDF</button></div>
+  <button class="svuota" id="svuota">Svuota il foglio</button>
+  <div class="esito" id="esito"></div>
+  <a class="torna" href="./">‹ Torna a Procedure e sicurezza</a>
+</main>
+<div id="pr"></div>
+
+<script>
+(function(){
+"use strict";
+var API = "";                 // indirizzo /exec dell'app web Google (da inserire)
+var CHIAVE = "dlf-7Q4k-ctrl";
+var PIN_ANTEPRIMA = "6606753e5a126d7068012a526d44c3eb2f7fcd09d5faeb30c77dbfd87ca7e758";
+function $(s){return document.querySelector(s)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function oggiIso(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function dIt(iso){ var p=String(iso).slice(0,10).split("-"); return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:iso; }
+var OP=null; try{ OP=JSON.parse(localStorage.getItem("op-ctrl")||"null"); }catch(e){}
+function sha(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return ("0"+x.toString(16)).slice(-2)}).join("")})}
+function post(o){ o.chiave=CHIAVE; return fetch(API,{method:"POST",body:JSON.stringify(o)}).then(function(r){return r.json()}); }
+function schermoPin(titolo, testo, prova){
+  var d=document.createElement("div"); d.className="pin";
+  d.innerHTML='<div class="pin-box"><img src="marchio.png" alt="" style="width:90px;height:90px;border-radius:50%;background:#fff;padding:14px 12px 10px"><h1>'+esc(titolo)+'</h1><p>'+testo+'</p><input type="password" inputmode="numeric" maxlength="8" aria-label="PIN"><button>Entra</button><div class="err"></div><a href="./" style="color:#fff;display:inline-block;margin-top:16px">‹ Torna a Procedure e sicurezza</a></div>';
+  document.body.appendChild(d); var i=d.querySelector("input"), b=d.querySelector("button"), er=d.querySelector(".err"); setTimeout(function(){i.focus()},100);
+  function vai(){ var v=i.value.trim(); if(!v) return; b.disabled=true; er.textContent="Verifica…"; prova(v).then(function(msg){ b.disabled=false; if(msg){ er.textContent=msg; i.value=""; } else d.remove(); }); }
+  b.onclick=vai; i.onkeydown=function(e){ if(e.key==="Enter") vai(); };
+}
+/* accesso: in anteprima PIN dell'area controlli; collegato al foglio, PIN personale + permesso */
+function accesso(titolo, permesso, avvia){
+  if(!API){
+    var ok=false; try{ ok=localStorage.getItem("pin-ctrl")===PIN_ANTEPRIMA }catch(e){}
+    if(ok){ avvia(null); return; }
+    schermoPin(titolo,"Anteprima: inserisci il PIN dell'area controlli.",function(v){ return sha(v).then(function(h){ if(h!==PIN_ANTEPRIMA) return "PIN non corretto."; try{localStorage.setItem("pin-ctrl",h)}catch(e){} avvia(null); return ""; }); });
+    return;
+  }
+  function conPin(pin){ return post({azione:"liste",pin:pin}).then(function(r){
+      if(!r.ok) return r.errore==="pin"?"PIN non riconosciuto.":r.errore;
+      if(!r[permesso]) return "Il tuo PIN non è abilitato a questa funzione.";
+      OP={nome:r.nome,pin:pin}; try{localStorage.setItem("op-ctrl",JSON.stringify(OP))}catch(e){}
+      avvia(r); return "";
+    }).catch(function(){ return "Serve la connessione per entrare."; }); }
+  if(OP&&OP.pin){ conPin(OP.pin).then(function(msg){ if(msg) schermoPin(titolo,"Entra con il tuo <b>PIN personale</b>.",conPin); }); }
+  else schermoPin(titolo,"Entra con il tuo <b>PIN personale</b>.",conPin);
+}
+function esci(){ OP=null; try{localStorage.removeItem("op-ctrl")}catch(e){} location.reload(); }
+
+var NOMI=[], LAVORI=[], SEL=[], ORE=8, RIGHE=[];
+var DEMO_NOMI=["Operaio 1","Operaio 2","Operaio 3","Operaio 4","Operaio 5","Operaio 6","Operaio 7","Operaio 8"];
+var AREE=["NCB","Rifacimento forno","Forno","CCO1","Parco Rottame"];
+var DEMO_LAVORI=[
+ {a:"NCB",l:"Officina NCB"},{a:"NCB",l:"Coperchi tundish"},{a:"NCB",l:"Pulizia e riordino area"},
+ {a:"Rifacimento forno",l:"Revisione volta 10"},{a:"Rifacimento forno",l:"Revisione volta 11"},{a:"Rifacimento forno",l:"Revisione volta 14"},{a:"Rifacimento forno",l:"Revisione tino 1"},{a:"Rifacimento forno",l:"Revisione tino 2"},{a:"Rifacimento forno",l:"Pulizia e riordino area"},
+ {a:"Forno",l:"Pulizia placche EBT"},{a:"Forno",l:"Cambio volta"},{a:"Forno",l:"Saldatura perdita volta"},{a:"Forno",l:"Sostituzione pannello"},{a:"Forno",l:"Regolazione clappa EBT"},{a:"Forno",l:"Lance KT"},{a:"Forno",l:"Ribalta elettrodi"},{a:"Forno",l:"Regolazione T2–T3"},{a:"Forno",l:"Pacco guarnizione montante"},
+ {a:"CCO1",l:"Carri trasferitori"},{a:"CCO1",l:"Catena carro trasferitore L1"},{a:"CCO1",l:"Lubrificazione stellini CSB"},{a:"CCO1",l:"Cerniera ribaltina MDT L3"},{a:"CCO1",l:"Tubo flushing L3–4"},
+ {a:"Parco Rottame",l:"Cambio lame cesoia Vezzani"}];
+var AREA="Forno"; try{ AREA=localStorage.getItem("gio-area")||"Forno"; }catch(e){}
+function nomiLocali(){ try{ return JSON.parse(localStorage.getItem("gio-nomi")||"null"); }catch(e){ return null; } }
+function salvaNomi(a){ try{ localStorage.setItem("gio-nomi",JSON.stringify(a)); }catch(e){} }
+(function(){ var m=/^#nomi=(.+)$/.exec(location.hash||""); if(!m) return;
+  var a=decodeURIComponent(m[1]).split("|").map(function(x){return x.trim()}).filter(Boolean);
+  if(a.length) salvaNomi(a); history.replaceState(null,"",location.pathname); })();
+function salvaBozza(){ try{ localStorage.setItem("gio-bozza",JSON.stringify({data:$("#data").value,righe:RIGHE,nota:$("#nota").value})); }catch(e){} }
+function extra(){ var e=[]; try{ e=JSON.parse(localStorage.getItem("gio-lavori-extra")||"[]"); }catch(x){}
+  return e.map(function(x){ return typeof x==="string"?{a:"NCB",l:x}:x; }).filter(function(x){ return !/^rev\.?\s*(volta|tino)\s*\d+/i.test(x.l); }); }
+function disegnaNomi(){
+  var usati={}; RIGHE.forEach(function(r){usati[r.nome]=1});
+  var locale=!API;
+  $("#nomi").innerHTML=NOMI.map(function(n){ return '<div class="lav"><button class="'+(SEL.indexOf(n)>=0?"on ":"")+(usati[n]?"fatto":"")+'" data-n="'+esc(n)+'">'+esc(n)+'</button>'+(locale?'<button class="tog" data-x="'+esc(n)+'" aria-label="Togli '+esc(n)+'">×</button>':'')+'</div>'; }).join("")+
+    (locale?'<button class="nuovo" id="nuovo-nome">+ Aggiungi nome</button>':'');
+  if(locale){
+    document.querySelectorAll("#nomi .tog").forEach(function(b){ b.onclick=function(){ var n=b.dataset.x; if(!confirm("Togliere «"+n+"» dall'elenco?")) return; NOMI=NOMI.filter(function(x){return x!==n}); SEL=SEL.filter(function(x){return x!==n}); salvaNomi(NOMI); disegnaNomi(); }; });
+    $("#nuovo-nome").onclick=function(){ var t=(prompt("Nome e cognome:")||"").trim(); if(!t||NOMI.indexOf(t)>=0) return; NOMI.push(t); salvaNomi(NOMI); disegnaNomi(); };
+  }
+  $("#n-sel").textContent=SEL.length?SEL.length+(SEL.length===1?" scelto":" scelti"):"";
+  document.querySelectorAll("#nomi button[data-n]").forEach(function(b){
+    var t=null;
+    function tocca(){ var n=b.dataset.n, i=SEL.indexOf(n); if(i>=0) SEL.splice(i,1); else SEL.push(n); disegnaNomi(); }
+    b.onclick=tocca;
+    b.oncontextmenu=function(e){ e.preventDefault(); };
+  });
+}
+function nascosti(){ try{ return JSON.parse(localStorage.getItem("gio-lavori-nascosti")||"[]"); }catch(e){ return []; } }
+function disegnaLavori(){
+  var tutti=LAVORI.concat(extra().filter(function(x){ return !LAVORI.some(function(y){return y.l.toLowerCase()===x.l.toLowerCase()}); }));
+  $("#aree").innerHTML=AREE.map(function(a){ var n=tutti.filter(function(x){return x.a===a}).length; return '<button data-a="'+esc(a)+'" class="'+(a===AREA?'on':'')+'">'+esc(a)+'<small>'+n+'</small></button>'; }).join("");
+  document.querySelectorAll("#aree button").forEach(function(b){ b.onclick=function(){ AREA=b.dataset.a; try{localStorage.setItem("gio-area",AREA)}catch(e){} disegnaLavori(); }; });
+  var nasc=nascosti(), chiave=function(x){ return (x.a+"|"+x.l).toLowerCase(); };
+  var visibili=tutti.filter(function(x){return x.a===AREA && nasc.indexOf(chiave(x))<0});
+  var quanti=tutti.filter(function(x){return x.a===AREA && nasc.indexOf(chiave(x))>=0}).length;
+  $("#lavori").innerHTML=visibili.map(function(x){ return '<div class="lav"><button data-l="'+esc(x.l)+'">'+esc(x.l)+'</button><button class="tog" data-l="'+esc(x.l)+'" aria-label="Togli '+esc(x.l)+'">×</button></div>'; }).join("")+'<button class="nuovo" id="nuovo">+ Altro lavoro '+esc(AREA)+'</button>'+
+    (quanti?'<button class="ripr" id="ripr">Rimetti i lavori tolti ('+quanti+')</button>':'');
+  document.querySelectorAll("#lavori button[data-l]:not(.tog)").forEach(function(b){ b.onclick=function(){ aggiungi(AREA+" – "+b.dataset.l); }; });
+  document.querySelectorAll("#lavori .tog").forEach(function(b){ b.onclick=function(){ var l=b.dataset.l;
+    if(!confirm("Togliere «"+l+"» dall'elenco "+AREA+"?")) return;
+    var e=extra(), i=-1; e.forEach(function(x,k){ if(x.a===AREA&&x.l===l) i=k; });
+    if(i>=0){ e.splice(i,1); try{localStorage.setItem("gio-lavori-extra",JSON.stringify(e))}catch(x){} }
+    else { var n=nascosti(); n.push((AREA+"|"+l).toLowerCase()); try{localStorage.setItem("gio-lavori-nascosti",JSON.stringify(n))}catch(x){} }
+    disegnaLavori(); }; });
+  if(quanti) $("#ripr").onclick=function(){ var n=nascosti().filter(function(k){ return k.indexOf(AREA.toLowerCase()+"|")!==0; }); try{localStorage.setItem("gio-lavori-nascosti",JSON.stringify(n))}catch(x){} disegnaLavori(); };
+  $("#nuovo").onclick=function(){ var t=(prompt("Nuovo lavoro per "+AREA+" (resterà nell'elenco di questo telefono):")||"").trim(); if(!t) return;
+    var e=extra(); if(!e.some(function(x){return x.a===AREA&&x.l.toLowerCase()===t.toLowerCase()})){ e.push({a:AREA,l:t}); try{localStorage.setItem("gio-lavori-extra",JSON.stringify(e))}catch(x){} }
+    disegnaLavori(); aggiungi(AREA+" – "+t); };
+}
+function aggiungi(lav){
+  if(!SEL.length){ esito("Prima tocca uno o più nomi.","ko"); window.scrollTo({top:$("#nomi").offsetTop-120,behavior:"smooth"}); return; }
+  SEL.forEach(function(n){ RIGHE.push({nome:n,attivita:lav,ore:ORE}); });
+  esito(SEL.length+(SEL.length===1?" persona":" persone")+" → "+lav+" ("+String(ORE).replace(".",",")+" h)","ok");
+  SEL=[]; disegnaNomi(); disegnaFoglio(); salvaBozza();
+}
+function gruppi(){ var ord=[], g={}; RIGHE.forEach(function(r,i){ if(!g[r.attivita]){ g[r.attivita]=[]; ord.push(r.attivita); } g[r.attivita].push(i); }); return ord.map(function(k){ return {att:k, idx:g[k]}; }); }
+function divAtt(s){ var k=s.indexOf(" – "); return k>0?{c:s.slice(0,k),l:s.slice(k+3)}:{c:"",l:s}; }
+function num(x){ return parseFloat(String(x).replace(",","."))||0; }
+function fmt(n){ return String(Math.round(n*100)/100).replace(".",","); }
+function disegnaFoglio(){
+  var f=$("#foglio");
+  if(!RIGHE.length){ f.innerHTML='<div class="vuoto">Ancora nessuna riga.</div>'; return; }
+  var tot=0, persone={};
+  f.innerHTML=gruppi().map(function(g){ var a=divAtt(g.att), sub=0;
+    var righe=g.idx.map(function(i){ var r=RIGHE[i], o=num(r.ore); sub+=o; tot+=o; persone[r.nome]=1;
+      return '<div class="r2"><span>'+esc(r.nome)+'</span><input class="o" data-i="'+i+'" inputmode="decimal" value="'+esc(fmt(o))+'" aria-label="Ore di '+esc(r.nome)+'"><button class="x" data-i="'+i+'" aria-label="Togli '+esc(r.nome)+'">×</button></div>'; }).join("");
+    return '<div class="gr"><div class="gt"><div>'+(a.c?'<small>'+esc(a.c)+'</small>':'')+'<b>'+esc(a.l)+'</b></div><span>'+fmt(sub)+' h</span></div>'+righe+'</div>';
+  }).join("")+'<div class="tot2"><span>Totale</span><span>'+Object.keys(persone).length+' persone</span><b>'+fmt(tot)+' h</b></div>';
+  f.querySelectorAll(".o").forEach(function(x){ x.onchange=function(){ RIGHE[+x.dataset.i].ore=num(x.value); disegnaFoglio(); salvaBozza(); }; });
+  f.querySelectorAll(".x").forEach(function(x){ x.onclick=function(){ RIGHE.splice(+x.dataset.i,1); disegnaFoglio(); disegnaNomi(); salvaBozza(); }; });
+}
+function esito(t,c){ var e=$("#esito"); e.className="esito on "+c; e.textContent=t; }
+function invia(){
+  if(!RIGHE.length) return esito("Il foglio è vuoto.","ko");
+  var d=$("#data").value||oggiIso();
+  if(!API) return esito("Anteprima: giornaliera non inviata. Quando colleghiamo il foglio Google arriverà in PDF a andrefave13@gmail.com.","info");
+  if(!confirm("Inviare in ufficio la giornaliera del "+dIt(d)+" ("+RIGHE.length+" righe)?")) return;
+  var b=$("#invia"); b.disabled=true; esito("Invio…","info");
+  post({azione:"giornaliera",pin:OP.pin,data:d,righe:RIGHE,nota:$("#nota").value}).then(function(r){
+    b.disabled=false; if(!r.ok) return esito("Non inviata: "+r.errore,"ko");
+    esito("Inviata: "+r.righe+" righe, PDF a "+r.email+".","ok"); RIGHE=[]; $("#nota").value=""; disegnaFoglio(); disegnaNomi(); salvaBozza();
+  }).catch(function(){ b.disabled=false; esito("Nessuna connessione: non inviata. Il foglio resta salvato sul telefono, riprova.","ko"); });
+}
+function stampa(){
+  var d=$("#data").value||oggiIso(), tot=0;
+  var corpo=gruppi().map(function(g){ var a=divAtt(g.att), sub=0;
+    var rr=g.idx.map(function(i){ var o=num(RIGHE[i].ore); sub+=o; tot+=o; return '<tr><td style="padding-left:18px">'+esc(RIGHE[i].nome)+'</td><td style="text-align:right">'+fmt(o)+'</td></tr>'; }).join("");
+    return '<tr><th style="background:#e8eef5">'+(a.c?esc(a.c)+' – ':'')+esc(a.l)+'</th><th style="background:#e8eef5;text-align:right">'+fmt(sub)+' h</th></tr>'+rr; }).join("");
+  $("#pr").innerHTML='<h2 style="margin:0 0 4px">Delfapi S.r.l. – Giornaliera dei lavori</h2><p>Cantiere Tenaris Dalmine · Data <b>'+dIt(d)+'</b>'+(OP?' · Compilata da <b>'+esc(OP.nome)+'</b>':'')+'</p><table><tr><th>Attività / Nome</th><th style="text-align:right;width:70px">Ore</th></tr>'+corpo+
+    '<tr><td><b>Totale ore</b></td><td style="text-align:right"><b>'+fmt(tot)+'</b></td></tr></table>'+($("#nota").value?'<p><b>Note:</b> '+esc($("#nota").value)+'</p>':'')+'<p style="margin-top:30px">Firma ______________________________</p>';
+  window.print();
+}
+document.querySelectorAll("#ore button").forEach(function(b){ b.onclick=function(){ var v=b.dataset.o;
+  if(v==="altro"){ var t=prompt("Quante ore? (es. 6 o 7,5)"); var n=parseFloat(String(t||"").replace(",",".")); if(!(n>0&&n<=24)) return; ORE=n; b.textContent=String(n).replace(".",","); }
+  else { ORE=+v; document.querySelector('#ore button[data-o="altro"]').textContent="altro"; }
+  document.querySelectorAll("#ore button").forEach(function(x){x.classList.toggle("on",x===b)}); }; });
+$("#invia").onclick=invia; $("#stampa").onclick=stampa; $("#esci").onclick=esci;
+$("#svuota").onclick=function(){ if(RIGHE.length&&confirm("Svuotare il foglio della giornata?")){ RIGHE=[]; disegnaFoglio(); disegnaNomi(); salvaBozza(); } };
+$("#nota").addEventListener("input",salvaBozza); $("#data").addEventListener("change",salvaBozza);
+accesso("Giornaliera lavori","giornaliera",function(r){
+  NOMI=r?r.dipendenti:(nomiLocali()||DEMO_NOMI.slice()); LAVORI=r?r.lavori.map(function(x){ return typeof x==="string"?{a:"NCB",l:x}:{a:x.area||"NCB",l:x.lavoro}; }):DEMO_LAVORI;
+  if(r){ $("#esci").hidden=false; $("#sotto").textContent="Compila: "+r.nome; }
+  else { $("#modo").hidden=false; $("#modo").textContent="Anteprima: i nomi sono salvati solo su questo telefono (non sul sito); quando colleghiamo il foglio Google arriveranno da lì. Lavori divisi per cantiere: NCB, Rifacimento forno, Forno, CCO1, Parco Rottame."; }
+  try{ var b=JSON.parse(localStorage.getItem("gio-bozza")||"null"); if(b){ RIGHE=b.righe||[]; $("#nota").value=b.nota||""; $("#data").value=b.data||oggiIso(); } }catch(e){}
+  if(!$("#data").value) $("#data").value=oggiIso();
+  disegnaNomi(); disegnaLavori(); disegnaFoglio();
+});
+
+if("serviceWorker" in navigator){ navigator.serviceWorker.register("./sw.js").catch(function(){}); }
+})();
+</script>
+</body>
+</html>

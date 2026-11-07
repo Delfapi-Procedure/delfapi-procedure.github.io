@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "it.delfapi.procedure",
+        "sha256_cert_fingerprints": ["E3:72:F5:6D:E4:5E:C0:64:DF:D1:61:E3:E5:A3:78:AD:7A:A6:86:9D:FF:7C:0F:ED:44:A5:1B:5B:86:52:35:EF"]
+      }
+    }]

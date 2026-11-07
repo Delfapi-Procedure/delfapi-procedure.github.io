@@ -1,0 +1,32 @@
+{
+ "name": "Procedure e sicurezza – Delfapi",
+ "short_name": "Procedure",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#eef1f4",
+ "theme_color": "#003d63",
+ "lang": "it",
+ "icons": [
+  {
+   "src": "icona-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icona-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icona-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "id": "/",
+ "description": "Procedure di lavoro e sicurezza Delfapi per il cantiere Tenaris Dalmine."
+}
